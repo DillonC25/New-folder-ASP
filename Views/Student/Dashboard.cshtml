@@ -1,0 +1,46 @@
+@model SeacoastUniversity.Models.Student
+@{
+    ViewData["Title"] = "Student Dashboard";
+}
+
+<div class="container mt-4">
+    <h2>Welcome, @Model.Name!</h2>
+    <p><strong>Grade Level:</strong> @Model.GradeLevel</p>
+
+    <h4 class="mt-4">Your Classes</h4>
+    @if (Model.Enrollments.Any())
+    {
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Instructor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in Model.Enrollments)
+                {
+                    <tr>
+                        <td>@e.Course.CourseName</td>
+                        <td>@e.Course.Instructor</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You are not currently enrolled in any classes.</p>
+    }
+
+    <h4 class="mt-4">Week at a Glance</h4>
+    <ul class="list-group">
+        <li class="list-group-item">
+            Monday: Attend @Model.Enrollments.FirstOrDefault()?.Course.CourseName ?? "Free!"
+        </li>
+        <li class="list-group-item">Tuesday: Study / Library time</li>
+        <li class="list-group-item">Wednesday: Lab or Class work</li>
+        <li class="list-group-item">Thursday: Group meetings</li>
+        <li class="list-group-item">Friday: Wrap-up and review</li>
+    </ul>
+</div>

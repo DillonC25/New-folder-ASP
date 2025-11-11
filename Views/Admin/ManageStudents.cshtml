@@ -1,0 +1,28 @@
+@model List<SeacoastUniversity.Models.Student>
+@{
+    ViewData["Title"] = "Manage Students";
+}
+
+<div class="container mt-5">
+    <h2>Manage Students</h2>
+
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Grade Level</th>
+                <th>User Linked</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.Name</td>
+                    <td>@s.GradeLevel</td>
+                    <td>@(string.IsNullOrEmpty(s.IdentityUserId) ? "No" : "Yes")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Seacoast University</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <h1>Seacoast University</h1>
+                </a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="nav-menu">
+                        @if (User.IsInRole("Student"))
+                        {
+                            <a asp-controller="Student" asp-action="Dashboard">Dashboard</a>
+                            <a asp-controller="Student" asp-action="AccountInfo">Account Info</a>
+                            <a asp-controller="Student" asp-action="WeekAtGlance">Week at a Glance</a>
+                            <a asp-controller="Student" asp-action="CampusDirectory">Campus Directory</a>
+                        }
+                        else if (User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
+                            <a asp-controller="Admin" asp-action="ManageStudents">Manage Students</a>
+                            <a asp-controller="Admin" asp-action="ManageClasses">Manage Classes</a>
+                        }
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
+                            <button type="submit" class="btn-logout">Logout</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Seacoast University. All rights reserved.</p>
+        </div>
+    </footer>
+    <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn-logout">Logout</button>
+    </form>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

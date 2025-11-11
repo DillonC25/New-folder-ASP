@@ -1,0 +1,90 @@
+@model List<SeacoastUniversity.Models.Student>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var courses = ViewBag.Courses as List<SeacoastUniversity.Models.Course>;
+}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Admin Dashboard</h1>
+
+    <!-- Add New Student -->
+    <div class="card p-4 mb-4 shadow-sm">
+        <h4>Add New Student</h4>
+        <form asp-action="AddStudent" method="post" class="row g-2 mt-2">
+            <div class="col-md-5">
+                <input name="name" class="form-control" placeholder="Student Name" required />
+            </div>
+            <div class="col-md-5">
+                <input name="gradeLevel" class="form-control" placeholder="Grade Level" required />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Add</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Link Student to User -->
+    <div class="card p-4 mb-4 shadow-sm">
+        <h4>Link Student to User Account</h4>
+        <form asp-action="LinkStudentToUser" method="post" class="row g-2 mt-2">
+            <div class="col-md-4">
+                <select name="studentId" class="form-select" required>
+                    <option value="">Select Student</option>
+                    @foreach (var s in Model)
+                    {
+                        <option value="@s.Id">@s.Name (@s.GradeLevel)</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <input name="userEmail" class="form-control" placeholder="User Email" required />
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Link</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Student List -->
+    <h3>All Students</h3>
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Grade Level</th>
+                <th>Linked User</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@s.Name</td>
+                    <td>@s.GradeLevel</td>
+                    <td>@(string.IsNullOrEmpty(s.IdentityUserId) ? "Not linked" : s.IdentityUserId)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Courses -->
+    <h3 class="mt-5">Courses</h3>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Instructor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in courses)
+            {
+                <tr>
+                    <td>@c.CourseName</td>
+                    <td>@c.Instructor</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

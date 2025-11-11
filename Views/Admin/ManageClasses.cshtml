@@ -1,0 +1,26 @@
+@model List<SeacoastUniversity.Models.Course>
+@{
+    ViewData["Title"] = "Manage Classes";
+}
+
+<div class="container mt-5">
+    <h2>Manage Classes</h2>
+
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Instructor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model)
+            {
+                <tr>
+                    <td>@c.CourseName</td>
+                    <td>@c.Instructor</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
