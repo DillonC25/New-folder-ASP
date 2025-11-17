@@ -11,7 +11,7 @@ using SeacoastUniversity.Data;
 namespace SeacoastUniversity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251111060540_InitialCreate")]
+    [Migration("20251117055940_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -216,28 +216,7 @@ namespace SeacoastUniversity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SeacoastUniversity.Models.ClassEnrollment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("ClassEnrollments");
-                });
-
-            modelBuilder.Entity("SeacoastUniversity.Models.Course", b =>
+            modelBuilder.Entity("SeacoastUniversity.Models.Class", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -253,7 +232,28 @@ namespace SeacoastUniversity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Classes");
+                });
+
+            modelBuilder.Entity("SeacoastUniversity.Models.Enrollment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Enrollments");
                 });
 
             modelBuilder.Entity("SeacoastUniversity.Models.Student", b =>
@@ -263,12 +263,15 @@ namespace SeacoastUniversity.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("GradeLevel")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("IdentityUserId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -329,11 +332,11 @@ namespace SeacoastUniversity.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SeacoastUniversity.Models.ClassEnrollment", b =>
+            modelBuilder.Entity("SeacoastUniversity.Models.Enrollment", b =>
                 {
-                    b.HasOne("SeacoastUniversity.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
+                    b.HasOne("SeacoastUniversity.Models.Class", "Class")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -343,7 +346,7 @@ namespace SeacoastUniversity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Course");
+                    b.Navigation("Class");
 
                     b.Navigation("Student");
                 });
@@ -352,9 +355,16 @@ namespace SeacoastUniversity.Migrations
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("IdentityUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IdentityUser");
+                });
+
+            modelBuilder.Entity("SeacoastUniversity.Models.Class", b =>
+                {
+                    b.Navigation("Enrollments");
                 });
 
             modelBuilder.Entity("SeacoastUniversity.Models.Student", b =>

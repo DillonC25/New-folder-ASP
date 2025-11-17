@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SeacoastUniversity.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStudentIdentityLink : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,7 +51,7 @@ namespace SeacoastUniversity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classes",
+                name: "Courses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -61,7 +61,7 @@ namespace SeacoastUniversity.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classes", x => x.Id);
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,25 +191,25 @@ namespace SeacoastUniversity.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enrollments",
+                name: "ClassEnrollments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     StudentId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ClassId = table.Column<int>(type: "INTEGER", nullable: false)
+                    CourseId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enrollments", x => x.Id);
+                    table.PrimaryKey("PK_ClassEnrollments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Classes_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Classes",
+                        name: "FK_ClassEnrollments_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Enrollments_Students_StudentId",
+                        name: "FK_ClassEnrollments_Students_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
@@ -254,13 +254,13 @@ namespace SeacoastUniversity.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_ClassId",
-                table: "Enrollments",
-                column: "ClassId");
+                name: "IX_ClassEnrollments_CourseId",
+                table: "ClassEnrollments",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollments_StudentId",
-                table: "Enrollments",
+                name: "IX_ClassEnrollments_StudentId",
+                table: "ClassEnrollments",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
@@ -288,13 +288,13 @@ namespace SeacoastUniversity.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Enrollments");
+                name: "ClassEnrollments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Classes");
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Students");

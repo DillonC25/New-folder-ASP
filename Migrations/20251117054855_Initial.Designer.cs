@@ -11,8 +11,8 @@ using SeacoastUniversity.Data;
 namespace SeacoastUniversity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251111055151_AddStudentIdentityLink")]
-    partial class AddStudentIdentityLink
+    [Migration("20251117054855_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,7 +216,28 @@ namespace SeacoastUniversity.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SeacoastUniversity.Models.Class", b =>
+            modelBuilder.Entity("SeacoastUniversity.Models.ClassEnrollment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("ClassEnrollments");
+                });
+
+            modelBuilder.Entity("SeacoastUniversity.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -232,28 +253,7 @@ namespace SeacoastUniversity.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Classes");
-                });
-
-            modelBuilder.Entity("SeacoastUniversity.Models.ClassEnrollment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Enrollments");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("SeacoastUniversity.Models.Student", b =>
@@ -331,9 +331,9 @@ namespace SeacoastUniversity.Migrations
 
             modelBuilder.Entity("SeacoastUniversity.Models.ClassEnrollment", b =>
                 {
-                    b.HasOne("SeacoastUniversity.Models.Class", "Class")
+                    b.HasOne("SeacoastUniversity.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("ClassId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -343,7 +343,7 @@ namespace SeacoastUniversity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Class");
+                    b.Navigation("Course");
 
                     b.Navigation("Student");
                 });

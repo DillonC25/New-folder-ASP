@@ -29,7 +29,7 @@ namespace SeacoastUniversity.Controllers
 
             var student = await _context.Students
                 .Include(s => s.Enrollments)
-                    .ThenInclude(e => e.Course)
+                    .ThenInclude(e => e.Class)
                 .FirstOrDefaultAsync(s => s.IdentityUserId == user.Id);
 
             if (student == null)

@@ -12,7 +12,7 @@ namespace SeacoastUniversity.Data
         }
 
         public DbSet<Student> Students { get; set; }
-        public DbSet<Course> Courses { get; set; }   // ✅ not Classes
-        public DbSet<ClassEnrollment> ClassEnrollments { get; set; }
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
     }
 }

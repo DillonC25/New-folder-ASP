@@ -19,7 +19,7 @@ namespace SeacoastUniversity.Controllers
         public async Task<IActionResult> Dashboard()
         {
             var students = await _context.Students.Include(s => s.Enrollments).ToListAsync();
-            var classes = await _context.Courses.ToListAsync();
+            var classes = await _context.Classes.ToListAsync();
             ViewBag.Courses = classes;
             return View(students);
         }
@@ -53,7 +53,7 @@ namespace SeacoastUniversity.Controllers
 
         public IActionResult ManageClasses()
         {
-            var courses = _context.Courses.ToList();
+            var courses = _context.Classes.ToList();
             return View(courses);
         }
 

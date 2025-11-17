@@ -1,24 +1,25 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-namespace SeacoastUniversity.Controllers
+public class AccountController : Controller
 {
-    public class AccountController : Controller
+    private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly ILogger<AccountController> _logger;
+
+    public AccountController(SignInManager<IdentityUser> signInManager, ILogger<AccountController> logger)
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        _signInManager = signInManager;
+        _logger = logger;
+    }
 
-        public AccountController(SignInManager<IdentityUser> signInManager)
-        {
-            _signInManager = signInManager;
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Logout()
+    {
+        _logger.LogInformation("Logout requested for {user}", User.Identity?.Name);
+        await _signInManager.SignOutAsync();
+        _logger.LogInformation("Logout completed for {user}", User.Identity?.Name);
+        return RedirectToAction("Index", "Home");
     }
 }

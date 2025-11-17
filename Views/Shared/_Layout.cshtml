@@ -29,7 +29,10 @@
                             <a asp-controller="Admin" asp-action="ManageStudents">Manage Students</a>
                             <a asp-controller="Admin" asp-action="ManageClasses">Manage Classes</a>
                         }
+
+                        <!-- FIXED LOGOUT BUTTON -->
                         <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
+                            @Html.AntiForgeryToken()
                             <button type="submit" class="btn-logout">Logout</button>
                         </form>
                     </div>
@@ -47,11 +50,6 @@
             <p>&copy; 2025 Seacoast University. All rights reserved.</p>
         </div>
     </footer>
-    <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn-logout">Logout</button>
-    </form>
-
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

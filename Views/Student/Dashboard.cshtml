@@ -21,8 +21,8 @@
                 @foreach (var e in Model.Enrollments)
                 {
                     <tr>
-                        <td>@e.Course.CourseName</td>
-                        <td>@e.Course.Instructor</td>
+                        <td>@e.Class.CourseName</td>
+                        <td>@e.Class.Instructor</td>
                     </tr>
                 }
             </tbody>
@@ -36,7 +36,7 @@
     <h4 class="mt-4">Week at a Glance</h4>
     <ul class="list-group">
         <li class="list-group-item">
-            Monday: Attend @Model.Enrollments.FirstOrDefault()?.Course.CourseName ?? "Free!"
+            Monday: Attend @Model.Enrollments.FirstOrDefault()?.Class.CourseName ?? "Free!"
         </li>
         <li class="list-group-item">Tuesday: Study / Library time</li>
         <li class="list-group-item">Wednesday: Lab or Class work</li>

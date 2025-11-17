@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using SeacoastUniversity.Data;
 using SeacoastUniversity.Models;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure SQLite
@@ -11,9 +10,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add Identity
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+})
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
 
@@ -32,27 +34,21 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Default routes
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
-// Add to Program.cs before app.Run();
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.EnsureCreated();
+// ======================
+// APPLY MIGRATIONS + SEED DATA
+// ======================
 
-    if (!context.Courses.Any())
-    {
-        context.Courses.AddRange(
-            new Course { CourseName = "Intro to Programming", Instructor = "Dr. Smith" },
-            new Course { CourseName = "Data Structures", Instructor = "Prof. Lee" }
-        );
-        context.SaveChanges();
-    }
-}
+
+
+// ======================
+// SEED ADMIN USER
+// ======================
 
 async Task EnsureAdminUserAsync(IHost app)
 {
@@ -68,13 +64,33 @@ async Task EnsureAdminUserAsync(IHost app)
 
     if (adminUser == null)
     {
-        adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+        adminUser = new IdentityUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true
+        };
+
         await userManager.CreateAsync(adminUser, "Admin123!");
         await userManager.AddToRoleAsync(adminUser, "Admin");
     }
 }
+
 await EnsureAdminUserAsync(app);
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
 
+    if (!context.Classes.Any())
+    {
+        context.Classes.AddRange(
+            new Class { CourseName = "Intro to Programming", Instructor = "Dr. Smith" },
+            new Class { CourseName = "Data Structures", Instructor = "Prof. Lee" }
+        );
 
+        context.SaveChanges();
+    }
+}
 
 app.Run();
