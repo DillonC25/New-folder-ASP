@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace SeacoastUniversity.Models
 {
@@ -6,15 +7,18 @@ namespace SeacoastUniversity.Models
     {
         public int Id { get; set; }
 
-        // Link to ASP.NET Identity user
-        public string IdentityUserId { get; set; }
-        public IdentityUser IdentityUser { get; set; }
+        [Required]
+        public string Name { get; set; } = "";
 
-        // Student info
-        public string Name { get; set; }
-        public string GradeLevel { get; set; }
+        [Required, EmailAddress]
+        public string Email { get; set; } = "";
 
-        // Navigation
-        public List<Enrollment> Enrollments { get; set; } = new();
+        public string GradeLevel { get; set; } = "";
+
+        public string? IdentityUserId { get; set; }
+        public IdentityUser? IdentityUser { get; set; }
+
+        // ADD THIS ↓↓↓
+        public List<Enrollment>? Enrollments { get; set; }
     }
 }

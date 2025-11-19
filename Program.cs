@@ -43,21 +43,44 @@ app.MapRazorPages();
 // ======================
 // APPLY MIGRATIONS + SEED DATA
 // ======================
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
 
-
+    // Seed default classes
+    if (!context.Classes.Any())
+    {
+        context.Classes.AddRange(
+            new Class { CourseName = "Intro to Programming", Instructor = "Dr. Smith" },
+            new Class { CourseName = "Data Structures", Instructor = "Prof. Lee" }
+        );
+        context.SaveChanges();
+    }
+}
 
 // ======================
-// SEED ADMIN USER
+// SEED ROLES
 // ======================
-
-async Task EnsureAdminUserAsync(IHost app)
+async Task EnsureRolesAsync(IHost app)
 {
     using var scope = app.Services.CreateScope();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
     if (!await roleManager.RoleExistsAsync("Admin"))
         await roleManager.CreateAsync(new IdentityRole("Admin"));
+
+    if (!await roleManager.RoleExistsAsync("Student"))
+        await roleManager.CreateAsync(new IdentityRole("Student"));
+}
+
+// ======================
+// SEED ADMIN USER
+// ======================
+async Task EnsureAdminUserAsync(IHost app)
+{
+    using var scope = app.Services.CreateScope();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
     var adminEmail = "admin@seacoast.edu";
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
@@ -76,21 +99,8 @@ async Task EnsureAdminUserAsync(IHost app)
     }
 }
 
-await EnsureAdminUserAsync(app);
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.Migrate();
-
-    if (!context.Classes.Any())
-    {
-        context.Classes.AddRange(
-            new Class { CourseName = "Intro to Programming", Instructor = "Dr. Smith" },
-            new Class { CourseName = "Data Structures", Instructor = "Prof. Lee" }
-        );
-
-        context.SaveChanges();
-    }
-}
+// ===== RUN SEEDING =====
+await EnsureRolesAsync(app);      // ✅ Ensure all roles exist first
+await EnsureAdminUserAsync(app);  // ✅ Then create admin
 
 app.Run();

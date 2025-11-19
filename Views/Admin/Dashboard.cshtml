@@ -1,90 +1,59 @@
-@model List<SeacoastUniversity.Models.Student>
+@model SeacoastUniversity.Models.AdminDashboardVM
 
-@{
-    ViewData["Title"] = "Admin Dashboard";
-    var courses = ViewBag.Courses as List<SeacoastUniversity.Models.Class>;
-}
+<h2>Admin Dashboard</h2>
 
-<div class="container mt-5">
-    <h1 class="mb-4">Admin Dashboard</h1>
+<div class="dashboard-cards" style="display:flex; gap:20px; margin-bottom:30px;">
+    <a href="/Admin/ManageStudents" class="card" 
+       style="padding:20px; background:#eef; border-radius:8px; text-decoration:none; color:black;">
+        <h3>Total Students</h3>
+        <p style="font-size:22px; font-weight:bold;">@Model.TotalStudents</p>
+        <span style="color:blue;">Manage Students →</span>
+    </a>
 
-    <!-- Add New Student -->
-    <div class="card p-4 mb-4 shadow-sm">
-        <h4>Add New Student</h4>
-        <form asp-action="AddStudent" method="post" class="row g-2 mt-2">
-            <div class="col-md-5">
-                <input name="name" class="form-control" placeholder="Student Name" required />
-            </div>
-            <div class="col-md-5">
-                <input name="gradeLevel" class="form-control" placeholder="Grade Level" required />
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">Add</button>
-            </div>
-        </form>
-    </div>
+    <a href="/Admin/ManageClasses" class="card"
+       style="padding:20px; background:#efe; border-radius:8px; text-decoration:none; color:black;">
+        <h3>Total Classes</h3>
+        <p style="font-size:22px; font-weight:bold;">@Model.TotalClasses</p>
+        <span style="color:green;">Manage Classes →</span>
+    </a>
+</div>
 
-    <!-- Link Student to User -->
-    <div class="card p-4 mb-4 shadow-sm">
-        <h4>Link Student to User Account</h4>
-        <form asp-action="LinkStudentToUser" method="post" class="row g-2 mt-2">
-            <div class="col-md-4">
-                <select name="studentId" class="form-select" required>
-                    <option value="">Select Student</option>
-                    @foreach (var s in Model)
-                    {
-                        <option value="@s.Id">@s.Name (@s.GradeLevel)</option>
-                    }
-                </select>
-            </div>
-            <div class="col-md-6">
-                <input name="userEmail" class="form-control" placeholder="User Email" required />
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success w-100">Link</button>
-            </div>
-        </form>
-    </div>
+<h3>Newest Students</h3>
 
-    <!-- Student List -->
-    <h3>All Students</h3>
-    <table class="table table-striped mt-3">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Grade Level</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model.NewestStudents)
+        {
             <tr>
-                <th>Name</th>
-                <th>Grade Level</th>
-                <th>Linked User</th>
+                <td>@student.Name</td>
+                <td>@student.Email</td>
+                <td>@student.GradeLevel</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" 
+                       asp-controller="Admin" asp-action="EditStudent" asp-route-id="@student.Id">
+                        Edit
+                    </a>
+                    <a class="btn btn-sm btn-secondary" 
+                       asp-controller="Admin" asp-action="ManageStudents">
+                        View All →
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var s in Model)
-            {
-                <tr>
-                    <td>@s.Name</td>
-                    <td>@s.GradeLevel</td>
-                    <td>@(string.IsNullOrEmpty(s.IdentityUserId) ? "Not linked" : s.IdentityUserId)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
-    <!-- Courses -->
-    <h3 class="mt-5">Courses</h3>
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>Course Name</th>
-                <th>Instructor</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var c in courses)
-            {
-                <tr>
-                    <td>@c.CourseName</td>
-                    <td>@c.Instructor</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<hr />
+
+<div style="margin-top:20px;">
+    <a class="btn btn-large btn-primary" href="/Admin/ManageStudents">Manage Students</a>
+    <a class="btn btn-large btn-success" href="/Admin/ManageClasses">Manage Classes</a>
 </div>

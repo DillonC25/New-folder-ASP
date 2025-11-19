@@ -1,26 +1,42 @@
 @model List<SeacoastUniversity.Models.Class>
-@{
-    ViewData["Title"] = "Manage Classes";
-}
 
-<div class="container mt-5">
-    <h2>Manage Classes</h2>
+<h2>Manage Classes</h2>
 
-    <table class="table table-striped mt-3">
-        <thead>
+<!-- ADD CLASS FORM -->
+<form asp-action="ManageClasses" method="post" class="mb-3">
+    <div class="form-group mb-2">
+        <label>Course Name</label>
+        <input type="text" name="CourseName" class="form-control" required />
+    </div>
+    <div class="form-group mb-2">
+        <label>Instructor</label>
+        <input type="text" name="Instructor" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Class</button>
+</form>
+
+
+<!-- CLASSES TABLE -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Instructor</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model)
+        {
             <tr>
-                <th>Course Name</th>
-                <th>Instructor</th>
+                <td>@c.CourseName</td>
+                <td>@c.Instructor</td>
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-action="EditClass" asp-route-id="@c.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" asp-action="DeleteClass" asp-route-id="@c.Id"
+                       onclick="return confirm('Delete this class?');">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var c in Model)
-            {
-                <tr>
-                    <td>@c.CourseName</td>
-                    <td>@c.Instructor</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>
