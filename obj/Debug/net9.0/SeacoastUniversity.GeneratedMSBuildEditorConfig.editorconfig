@@ -44,6 +44,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFuYWdlU3R1ZGVudHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/dillo/Documents/New folder/Views/Directory/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlyZWN0b3J5XEFkZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/dillo/Documents/New folder/Views/Directory/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlyZWN0b3J5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/dillo/Documents/New folder/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -58,6 +66,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/dillo/Documents/New folder/Views/Student/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3R1ZGVudFxEYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/dillo/Documents/New folder/Views/Week/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcV2Vla1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/dillo/Documents/New folder/Views/_ViewImports.cshtml]

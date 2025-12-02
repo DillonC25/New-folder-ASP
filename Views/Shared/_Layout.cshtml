@@ -15,20 +15,7 @@
                 </a>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <div class="nav-menu">
-                        @if (User.IsInRole("Student"))
-                        {
-                            <a asp-controller="Student" asp-action="Dashboard">Dashboard</a>
-                            <a asp-controller="Student" asp-action="AccountInfo">Account Info</a>
-                            <a asp-controller="Student" asp-action="WeekAtGlance">Week at a Glance</a>
-                            <a asp-controller="Student" asp-action="CampusDirectory">Campus Directory</a>
-                        }
-                        else if (User.IsInRole("Admin"))
-                        {
-                            <a asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
-                            <a asp-controller="Admin" asp-action="ManageStudents">Manage Students</a>
-                            <a asp-controller="Admin" asp-action="ManageClasses">Manage Classes</a>
-                        }
+                    <div class="nav-item">
 
                         <!-- FIXED LOGOUT BUTTON -->
                         <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">

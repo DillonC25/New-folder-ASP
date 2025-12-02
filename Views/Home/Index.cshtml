@@ -2,13 +2,103 @@
     ViewData["Title"] = "Seacoast University";
 }
 
-<div class="text-center mt-5">
-    <h1>Welcome to Seacoast University Portal</h1>
-    <p>Select an option below:</p>
-    <ul class="list-group mt-4">
-        <li class="list-group-item"><a href="/Student/Dashboard">Student Portal</a></li>
-        <li class="list-group-item"><a href="/Admin/Dashboard">Admin Dashboard</a></li>
-        <li class="list-group-item"><a href="/Home/Directory">Campus Directory</a></li>
-        <li class="list-group-item"><a href="/Home/WeekAtAGlance">Week at a Glance</a></li>
-    </ul>
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #0066cc, #004080);
+        color: white;
+        padding: 80px 20px;
+        border-radius: 15px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+    }
+
+    .hero-sub {
+        font-size: 1.3rem;
+        opacity: 0.9;
+    }
+
+    .nav-card {
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-radius: 15px;
+        padding: 25px;
+    }
+
+    .nav-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+    }
+
+    .nav-icon {
+        font-size: 2.7rem;
+        margin-bottom: 15px;
+        color: #004080;
+    }
+
+    a.nav-link-btn {
+        text-decoration: none;
+        color: inherit;
+    }
+
+</style>
+
+
+<div class="container mt-5">
+
+    <!-- HERO BANNER -->
+    <div class="hero-section text-center">
+        <h1 class="hero-title">Seacoast University Portal</h1>
+        <p class="hero-sub">Your gateway to academics, administration, and campus resources.</p>
+    </div>
+
+
+    <!-- NAVIGATION CARDS -->
+    <div class="row text-center justify-content-center g-4">
+
+        <div class="col-md-3">
+            <a class="nav-link-btn" href="/Student/Dashboard">
+                <div class="card nav-card">
+                    <i class="bi bi-person-fill nav-icon"></i>
+                    <h4>Student Portal</h4>
+                    <p>Access your profile, courses, grades, and more.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="nav-link-btn" href="/Admin/Dashboard">
+                <div class="card nav-card">
+                    <i class="bi bi-shield-lock-fill nav-icon"></i>
+                    <h4>Admin Dashboard</h4>
+                    <p>Manage users, view activity logs, and control data.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="nav-link-btn" href="/Directory">
+                <div class="card nav-card">
+                    <i class="bi bi-people-fill nav-icon"></i>
+                    <h4>Campus Directory</h4>
+                    <p>Find students, staff, and departments.</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a class="nav-link-btn" href="/Week">
+                <div class="card nav-card">
+                    <i class="bi bi-calendar-week-fill nav-icon"></i>
+                    <h4>Week at a Glance</h4>
+                    <p>View your schedule and upcoming campus events.</p>
+                </div>
+            </a>
+        </div>
+
+    </div>
+
 </div>

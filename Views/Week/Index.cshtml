@@ -1,0 +1,36 @@
+@model List<FancySignup.Models.WeekDay>
+
+<h2>Week at a Glance</h2>
+
+<form method="post" asp-action="Save">
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Day</th>
+            <th>Date</th>
+            <th>Notes</th>
+        </tr>
+
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Model[i].DayName
+                    <input type="hidden" name="days[@i].DayName" value="@Model[i].DayName" />
+                </td>
+
+                <td>
+                    @Model[i].Date
+                    <input type="hidden" name="days[@i].Date" value="@Model[i].Date" />
+                </td>
+
+                <td>
+                    <input type="text" name="days[@i].Notes" value="@Model[i].Notes" class="form-control" />
+                </td>
+            </tr>
+        }
+    </table>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+
+</form>

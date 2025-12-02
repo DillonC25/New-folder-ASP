@@ -1,0 +1,27 @@
+@model FancySignup.Models.DirectoryPerson
+
+<h2>Add Directory Entry</h2>
+
+<form method="post">
+
+    <label>Name</label>
+    <input class="form-control" name="Name" required />
+
+    <label>Email</label>
+    <input class="form-control" name="Email" required />
+
+    <label>Phone</label>
+    <input class="form-control" name="Phone" />
+
+    <label>Department</label>
+    <input class="form-control" name="Department" />
+
+    <label>Role</label>
+    <select name="Role" class="form-control">
+        <option>Student</option>
+        <option>Faculty</option>
+        <option>Staff</option>
+    </select>
+
+    <button type="submit" class="btn btn-success mt-3">Save</button>
+</form>
