@@ -16,10 +16,10 @@ public class AccountController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
-    {
-        _logger.LogInformation("Logout requested for {user}", User.Identity?.Name);
-        await _signInManager.SignOutAsync();
-        _logger.LogInformation("Logout completed for {user}", User.Identity?.Name);
-        return RedirectToAction("Index", "Home");
-    }
+        {
+            _logger.LogInformation("Logout requested for user {User}", User?.Identity?.Name ?? "(anonymous)");
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("Sign-out completed for user {User}", User?.Identity?.Name ?? "(anonymous)");
+            return RedirectToAction("Index", "Home");
+        }
 }

@@ -99,8 +99,45 @@ async Task EnsureAdminUserAsync(IHost app)
     }
 }
 
+async Task EnsureStudentUserAsync(IHost app)
+{
+    using var scope = app.Services.CreateScope();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    var studentEmail = "student@seacoast.edu";
+    var studentUser = await userManager.FindByEmailAsync(studentEmail);
+
+    if (studentUser == null)
+    {
+        studentUser = new IdentityUser
+        {
+            UserName = studentEmail,
+            Email = studentEmail,
+            EmailConfirmed = true
+        };
+
+        await userManager.CreateAsync(studentUser, "Student123!");
+        await userManager.AddToRoleAsync(studentUser, "Student");
+
+        // Optional: Add Student record in your Students table
+        if (!context.Students.Any(s => s.IdentityUserId == studentUser.Id))
+        {
+            var student = new Student
+            {
+                Name = "Default Student",
+                GradeLevel = "Freshman",
+                IdentityUserId = studentUser.Id
+            };
+
+            context.Students.Add(student);
+            await context.SaveChangesAsync();
+        }
+    }
+}
+
 // ===== RUN SEEDING =====
 await EnsureRolesAsync(app);      // ✅ Ensure all roles exist first
 await EnsureAdminUserAsync(app);  // ✅ Then create admin
-
+await EnsureStudentUserAsync(app); 
 app.Run();

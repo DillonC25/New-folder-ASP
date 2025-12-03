@@ -13,17 +13,7 @@
                 <a class="navbar-brand" href="/">
                     <h1>Seacoast University</h1>
                 </a>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <div class="nav-item">
-
-                        <!-- FIXED LOGOUT BUTTON -->
-                        <form asp-controller="Account" asp-action="Logout" method="post" class="logout-form">
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="btn-logout">Logout</button>
-                        </form>
-                    </div>
-                }
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </nav>
     </header>
