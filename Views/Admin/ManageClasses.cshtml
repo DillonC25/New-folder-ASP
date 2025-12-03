@@ -4,6 +4,7 @@
 
 <!-- ADD CLASS FORM -->
 <form asp-action="ManageClasses" method="post" class="mb-3">
+    @Html.AntiForgeryToken()
     <div class="form-group mb-2">
         <label>Course Name</label>
         <input type="text" name="CourseName" class="form-control" required />
