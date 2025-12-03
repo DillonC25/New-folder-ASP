@@ -1,0 +1,92 @@
+﻿SeaCoast University – README
+Project made by Dillon Cool, Robert Deleon, Jahaziel Guerrero
+Overview
+FancySignup is a simple ASP.NET Core web application that demonstrates:
+* User signup
+
+* User login
+
+* SQLite storage
+
+* Basic admin dashboard
+
+* Custom password validation
+
+
+* MVC architecture (Models, Views, Controllers)
+________________
+
+
+Data Storage
+This project uses SQLite for class and student storage.
+________________
+
+
+Password Rules
+Passwords must:
+   * Start with a letter
+
+   * Contain at least one uppercase letter
+
+   * Contain at least one lowercase letter
+
+   * Contain at least one digit
+
+   * Be at least 8 characters long
+
+Example valid password:
+Abcdef12
+
+
+________________
+
+
+Demo Logins
+Admin Login
+Username: admin
+Password: Admin123!
+________________
+
+
+How to Run
+From the project folder:
+dotnet run
+
+
+The app launches on:
+https://localhost:5000
+
+
+(Port numbers may vary depending on your machine.)
+________________
+
+
+Features
+User Signup
+      * Validates password rules
+
+      * Prevents duplicate emails
+
+User Login
+         * Compares input credentials to users stored in database
+
+         * Redirects to profile page after login
+
+Admin Dashboard
+            * Protected admin-only login
+
+            * View all registered users
+
+            * Delete users
+
+            * Basic user stats
+
+            * Reads directly from users.txt
+
+________________
+
+
+Important Notes
+               * This app is for was created for COSC-3351 as a project
+               * Our group used Git for collaboration
+               * Works on multiple browsers
